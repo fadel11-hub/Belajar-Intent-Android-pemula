@@ -1,6 +1,7 @@
 package com.example.myintentapp
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -19,6 +20,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val btnMoveWithObject: Button = findViewById(R.id.btn_move_activity_object)
         btnMoveWithObject.setOnClickListener(this)
+
+        val btnDialPhone: Button = findViewById(R.id.btn_dial_number)
+        btnDialPhone.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -30,11 +34,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.btn_move_activity_data -> {
             val moveWithDataIntent = Intent(this@MainActivity, MoveWithDataActivity::class.java)
-//                putExtra = mengirimkan data ke MoveWithDataActivity dengan objek intent yang merupakan metode key-value
+//            putExtra = mengirimkan data ke MoveWithDataActivity dengan objek intent yang merupakan metode key-value
                 moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_NAME, "dicodingAcademy Boy")
                 moveWithDataIntent.putExtra(MoveWithDataActivity.EXTRA_AGE, 5)
                 startActivity(moveWithDataIntent)
             }
+
+//            Mengirimkan data object ke MoveWithObjectActivity dengan put Parcelable
             R.id.btn_move_activity_object -> {
                 val person = Person(
                     "DicodingAcademy",
@@ -45,6 +51,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val moveWithObjectIntent = Intent(this@MainActivity, MoveWithObjectActivity::class.java)
             moveWithObjectIntent.putExtra(MoveWithObjectActivity.EXTRA_PERSON, person)
             startActivity(moveWithObjectIntent)
+            }
+
+//            Intent implicit untuk melakukan dial sebuah nomor telepon
+            R.id.btn_dial_number -> {
+                val phoneNumber = "08120841382"
+//                Action Intent untuk melakukan dial sebuah nomor telepon
+//                ADCTION_DIAL menentukan intent filter dari aplikasi aplikasi yang bisa menangani action tersebut
+                val dialPhoneintent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+                startActivity(dialPhoneintent)
             }
 
 
